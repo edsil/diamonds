@@ -1,0 +1,36 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.instruc {
+    position: absolute;
+    top: 13px;
+    left: 3px;
+    width: 200px;
+}
+
+.drawing {
+    position: absolute;
+    top: 13px;
+    left: 210px;
+    display: flex;
+    flex-direction: column;
+}
+
+button {
+    width: 100%;
+    border: 2px solid blue;
+    border-radius: 10px;
+    background-color:ghostwhite
+}
+
+.buttons {
+    position: absolute;
+    top: 220px;
+    left: 210px;
+    width: 400px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
