@@ -43,13 +43,47 @@ function positionDiam(dn, x, y, diaBad = false) {
     dn.forEach(function (a, i) {
         dx = x + i * 30;
         if (a == diaBad) {
-            ctx.drawImage(bad, dx, dy + 5, 25, 20);
+            //ctx.drawImage(bad, dx, dy + 5, 25, 20);
+            //ctx.fillText(String(a), dx + 8, dy);
+            new SlowDraw(bad, String(a), dx, dy + 5, 25, 20, 0.1);
         } else {
-            ctx.drawImage(diam, dx, dy + 5, 25, 20);
+            //ctx.drawImage(diam, dx, dy + 5, 25, 20);
+            //ctx.fillText(String(a), dx + 8, dy);
+            new SlowDraw(diam, String(a), dx, dy + 5, 25, 20, 0.1);
         }
-        ctx.fillText(String(a), dx + 8, dy);
     });
     ctx.drawImage(diam, dx, dy + 5, 25, 20);
+}
+
+class SlowDraw {
+    constructor(img, str, dx, dy, w, h, time) {
+        this.img = img;
+        this.str = str;
+        this.dx = dx;
+        this.dy = dy;
+        this.w = w;
+        this.h = h;
+        this.time = time;
+        this.counter = 0;
+        this.draw(time);
+    }
+
+    draw(time) {
+        ctx.drawImage(this.img, this.dx, this.dy, this.w, this.h);
+        var opp = (100 - this.counter) / 100;
+        ctx.fillStyle = "rgba(255,255,255," + opp + ")";
+        ctx.fillRect(this.dx, this.dy, this.w, this.h);
+        ctx.fillStyle = "rgb(0,0,0,0.01)";
+        ctx.font = "12px Arial";
+        ctx.fillText(this.str, this.dx + 8, this.dy);
+        this.counter++;
+        if (this.counter < 100) {
+            setTimeout(time => { this.draw(time); }, time / 100);
+        } else {
+            this.counter = 0;
+        }
+    }
+
 }
 
 function start() {
@@ -88,6 +122,8 @@ function update() {
         positionDiam(to_show, 10, 10);
         positionDiam(whatToMeas[0], 35, 88);
         positionDiam(whatToMeas[1], 245, 88);
+        ctx.font = "25px Arial";
+        ctx.fillText(dia.nextToMeasure(), 190, 70);
     } else {
         redraw();
         positionDiam([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], 10, 10, dia.result[0]);
